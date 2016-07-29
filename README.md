@@ -1,2 +1,2 @@
-# Stock-Exchange-System
+# Stock-Trading-System
 an internship work for hs company
