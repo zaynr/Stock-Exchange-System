@@ -1,0 +1,15 @@
+.form-area{
+    width: 400px;
+    height: 222px;
+    padding: 12px;
+    background-color: white;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    position: relative;
+    top: 178px;
+    left: 374px;
+}
+
+label{
+    color: rgb(37,37,37);
+}
