@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>资金账号维护</title>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="../css/bootstrap.css">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="../js/jquery.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="../js/bootstrap.js"></script>
+
+    <link rel="stylesheet" href="../css/common.css">
+
+    <link rel="stylesheet" href="../css/risk.css">
+</head>
+<body>
+<div class="container-fluid">
+
+    <!--导航条开始-->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">O++</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="fund.html">资金账号维护 <span class="sr-only">(current)</span></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">风控设置<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">黑白池设置</a></li>
+                            <li><a href="#">风控设置</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">指令管理<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">单产品指令</a></li>
+                            <li><a href="#">指令管理</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">委托查询<span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">日终<span class="sr-only">(current)</span></a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">个人中心<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">信息管理</a></li>
+                            <li><a href="#">注销</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+    <!--导航条结束-->
+    <div class="nav-area">
+        <div class="btn-group btn-group-vertical" role="group" aria-label="...">
+            <button class="btn" id="numberControl">证券持仓数量控制</button>
+            <button class="btn" id="valueControl">证券持仓市值控制</button>
+            <button class="btn" id="poolControl">黑白池买卖控制</button>
+        </div>
+    </div>
+
+
+        <div class="bond-number-area">
+        <div class="table-area">
+
+
+                <div class="btn-group" role="group" aria-label="">
+                    <button class="btn" id="addNumber" >增加</button>
+                    <button class="btn" id="alterNumber">修改</button>
+                    <button class="btn" id="delNumber">删除</button>
+                </div>
+            <table class="table table-bordered">
+             <thead>
+                <tr>
+                    <th>规则序号1</th>
+                    <th>规则类别</th>
+                    <th>状态</th>
+                    <th>规则说明</th>
+                    <th>备注</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+
+        </div>
+
+    <div class="bond-value-area">
+        <div class="table-area">
+
+
+            <div class="btn-group" role="group" aria-label="">
+                <button class="btn" id="addValue" >增加</button>
+                <button class="btn" id="alterValue">修改</button>
+                <button class="btn" id="delValue">删除</button>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>规则序号2</th>
+                    <th>规则类别</th>
+                    <th>状态</th>
+                    <th>规则说明</th>
+                    <th>备注</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="pool-area">
+        <div class="table-area">
+
+
+            <div class="btn-group" role="group" aria-label="">
+                <button class="btn" id="addPool" >增加</button>
+                <button class="btn" id="alterPool">修改</button>
+                <button class="btn" id="delPool">删除</button>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>规则序号3</th>
+                    <th>规则类别</th>
+                    <th>状态</th>
+                    <th>规则说明</th>
+                    <th>备注</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+
+    </div>
+
+
+
+
+    <!--证券数量部分模态框开始-->
+    <div class="modal fade" id="bondModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+
+            <!--加入modal-hd修改模态框背景颜色-->
+            <div class="modal-content modal-hd">
+
+                <div class="modal-hd-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="denominator" class="control-label">分母:</label>
+                            <select name="denominator" id="denominator" class="form-control">
+                                <option value="1" selected>该证券总股本</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="direction" class="control-label">比较方向:</label>
+                            <select name="direction" id="direction" class="form-control">
+                                <option value="1" selected>大于</option>
+                                <option value="2">小于</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="threshold" class="control-label">阀值:</label>
+                            <input type="text" class="form-control" id="threshold" placeholder="百分比">
+                        </div>
+                        <div class="form-group">
+                            <label for="operate" class="control-label">比较方向:</label>
+                            <select name="operate" id="operate" class="form-control">
+                                <option value="0" selected>无</option>
+                                <option value="1">预警</option>
+                                <option value="2">禁止</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="type" class="control-label">比较方向:</label>
+                            <select name="type" id="type" class="form-control">
+                                <option value="1" selected>多仓</option>
+                                <option value="2">空仓</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="caption" class="control-label">规则说明:</label>
+                            <textarea name="caption" id="caption" cols="3" rows="3" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="remark" class="control-label">备注:</label>
+                            <textarea name="remark" id="remark" cols="3" rows="3" class="form-control"></textarea>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-hd-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">&nbsp;&nbsp;关闭&nbsp;&nbsp;</button>
+                    <button type="button" class="btn btn-default">&nbsp;&nbsp;保存&nbsp;&nbsp;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--模态框结束-->
+
+
+    <!--黑白池部分模态框开始-->
+    <div class="modal fade" id="poolModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+
+            <!--加入modal-hd修改模态框背景颜色-->
+            <div class="modal-content modal-hd">
+
+                <div class="modal-hd-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="investPool" class="control-label">投资池:</label>
+                            <select name="investPool" id="investPool" class="form-control">
+                                <option value="0" selected>不控制</option>
+                                <option value="1">禁止买入</option>
+                                <option value="2">禁止卖出</option>
+                                <option value="3">禁止买卖</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="forbidPool" class="control-label">禁止池:</label>
+                            <select name="forbidPool" id="forbidPool" class="form-control">
+                                <option value="0" selected>不控制</option>
+                                <option value="1">禁止买入</option>
+                                <option value="2">禁止卖出</option>
+                                <option value="3">禁止买卖</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="poolCaption" class="control-label">规则说明:</label>
+                            <textarea name="poolCaption" id="poolCaption" cols="3" rows="3" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="poolRemark" class="control-label">备注:</label>
+                            <textarea name="poolRemark" id="poolRemark" cols="3" rows="3" class="form-control"></textarea>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-hd-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">&nbsp;&nbsp;关闭&nbsp;&nbsp;</button>
+                    <button type="button" class="btn btn-default">&nbsp;&nbsp;保存&nbsp;&nbsp;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--模态框结束-->
+
+
+<div class="footer">
+    <p>Copyright &copy; 恒生电子股份有限公司</p>
+</div>
+</div>
+
+<script>
+    $(function () {
+
+
+        $("#numberControl").click(function () {
+            $(".bond-value-area").hide();
+            $(".pool-area").hide();
+            $(".bond-number-area").show();
+        });
+        $("#valueControl").click(function () {
+            $(".bond-number-area").hide();
+            $(".pool-area").hide();
+            $(".bond-value-area").show();
+
+        });
+        $("#poolControl").click(function () {
+            $(".bond-value-area").hide();
+            $(".bond-number-area").hide();
+            $(".pool-area").show();
+        });
+
+        $("#addNumber").click(function () {
+            //var modal = $("#bondNumberModal");
+
+            $('#bondModal').modal({
+                keyboard: true,
+                backdrop:'static'
+            })
+        })
+        $("#addValue").click(function () {
+            //var modal = $("#bondNumberModal");
+
+            $('#bondModal').modal({
+                keyboard: true,
+                backdrop:'static'
+            })
+        })
+        $("#addPool").click(function () {
+            //var modal = $("#bondNumberModal");
+
+            $('#poolModal').modal({
+                keyboard: true,
+                backdrop:'static'
+            })
+        })
+    })
+</script>
+</body>
+</html>

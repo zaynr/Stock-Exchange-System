@@ -1,0 +1,17 @@
+
+<body>
+<div class="container-fluid">
+#parse("/screen/navigation-bar/navigation-bar.vm")
+    <!--内容区开始-->
+
+    <div class="welcome-word">
+        <h1>欢迎来到O++交易系统</h1>
+    </div>
+
+</div>
+
+<div class="footer">
+    <p>&copy;恒生电子股份有限公司</p>
+</div>
+</body>
+</html>

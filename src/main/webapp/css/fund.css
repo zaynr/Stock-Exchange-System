@@ -1,0 +1,16 @@
+.btn-group{
+    padding-bottom: 20px;
+}
+
+.btn-group > button{
+    width: 100px;
+    background-color: rgb(50,50,50);
+}
+.btn-group > button:hover{
+    color: black;
+    background-color: #e3e3e3;
+}
+.btn-group > button:focus{
+    color: white;
+    background-color: rgb(50,50,50);
+}

@@ -1,0 +1,8 @@
+<h4>中文中文中文中文</h4>
+<form method="POST" action="$appServer.get('/zl/test/list.htm')">
+    <fieldset>
+        <label>post:</label>
+        <input name="data"/>
+        <input type="submit"/>
+    </fieldset>
+</form>

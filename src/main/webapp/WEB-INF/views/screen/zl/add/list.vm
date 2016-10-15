@@ -1,0 +1,111 @@
+
+<body>
+<div class="container-fluid">
+
+<script src="${appServer}/js/jquery.autocomplete.js"></script>
+<link rel="stylesheet" href="${appServer}/css/jquery.autocomplete.css">
+<script>
+#parse("/screen/zl/add/s.vm")
+</script>
+    <!--内容区开始-->
+
+    <div class="table-responsive">
+        <table class="table table-bordered" style="white-space: nowrap">
+            <caption>资产信息</caption>
+            <thead>
+            <tr>
+                <th>总资产</th>
+                <th>期初资金余额</th>
+                <th>现金资产</th>
+                <th>股票资产</th>
+                <th>可用金额</th>
+            </tr>
+            </thead>
+            <tbody id = 'assetTable'>
+                <tr><td colspan="25" align="center">无数据</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered" style="white-space: nowrap">
+            <caption>持仓信息</caption>
+            <thead>
+            <tr>
+                <th>当前数量</th>
+                <th>可卖数量</th>
+                <th>证券代码</th>
+                <th>证券名称</th>
+                <th>最新价</th>
+                <th>证券状态</th>
+                <th>昨收盘价</th>
+            </tr>
+            </thead>
+            <tbody id = 'stockTable'>
+                <tr><td colspan="25" align="center">无数据</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <br>
+
+    <div style="width: 90%; margin: auto;">
+        <div>
+            <div class="form-group col-sm-2" style="width: 30%; float:left;">
+                <label class="control-label">证券代码</label>
+                <input type="text" class="form-control" id="report">
+            </div>
+            <div class="form-group col-sm-2" style="width: 30%; float:left;">
+                <label class="control-label">委托方向</label>
+                <select class="form-control selectpicker" id="entrustDirection">
+                </select>
+            </div>
+        </div>
+        <div style="clear:both;"></div>
+        <div>
+            <div class="form-group col-sm-2" style="width: 30%; float:left;">
+                <label class="control-label">指令价格</label>
+                <input type="number" step="0.01" class="form-control" id="insPrice">
+            </div>
+            <div class="form-group col-sm-2" style="width: 30%; float:left;">
+                <label class="control-label">指令数量</label>
+                <input type="number" step="100" class="form-control" id="insAmount">
+            </div>
+            <div class="form-group col-sm-2" style="width: 30%; float:left;">
+                <label class="control-label">指令金额</label>
+                <input type="number" step="0.01" class="form-control" id="insBalance" style="background:white" disabled>
+            </div>
+        </div>
+        <div style="clear:both;"></div>
+        <div>
+            <div class="form-group col-sm-2" style="width: 30%; float:left;">
+                <label class="control-label">执行人</label>
+                <select class="form-control selectpicker" id="tradeOperator">
+                </select>
+            </div>
+            <div class="form-group col-sm-2" style="width: 30%; float:left;">
+                <label class="control-label">备注</label>
+                <input type="text" class="form-control" id="remark">
+            </div>
+        </div>
+        <div style="clear:both;"></div>
+        <button id="add" type="submit" class="btn btn-primary btn-lg" style="margin-left: 45%;">提交</button>
+    </div>
+</div>
+<div class="modal fade" id="mb" tabindex="-1" role="dialog" aria-labelledby="mbLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style='color:black;'>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="mbLabel">错误</h4>
+            </div>
+            <div class="modal-body" id="mbBody" style="word-wrap:break-word;word-break:break-all;"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="mbButton">确认</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+</body>
+</html>

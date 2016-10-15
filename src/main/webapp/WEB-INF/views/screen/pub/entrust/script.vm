@@ -1,0 +1,153 @@
+
+function reload(){
+    window.location.reload();
+}
+
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+    var r = window.location.search.substr(1).match(reg); //匹配目标参数
+    if (r != null) return unescape(r[2]); return null; //返回参数值
+}
+
+function query(pageIndex){
+    var startDate = $("input[name='startDate']").val();
+    var endDate = $("input[name='endDate']").val();
+    var dateArr = startDate > endDate ? [endDate, startDate] : [startDate, endDate];
+    var time1 = Date.parse(dateArr[0]);
+    var time = new Date();
+    var time2 = Date.parse(time.toLocaleDateString());
+    var gap = parseInt(Math.abs((time2 - time1))/1000/60/60/24, 10);
+    if(time2 <= Date.parse(dateArr[1])){
+        if(time.getMonth() < 10){
+            dateArr[1] = time.getFullYear()+"-0"+(time.getMonth()+1)+"-"+time.getDate();
+        }
+        else{
+            dateArr[1] = time.getFullYear()+"-"+(time.getMonth()+1)+"-"+time.getDate();
+        }
+    }
+    if(time2 <= Date.parse(dateArr[0])){
+        if(time.getMonth() < 10){
+            dateArr[0] = time.getFullYear()+"-0"+(time.getMonth()+1)+"-"+time.getDate();
+        }
+        else{
+            dateArr[0] = time.getFullYear()+"-"+(time.getMonth()+1)+"-"+time.getDate();
+        }
+    }
+    if(gap > 180){
+        alert("查询时间最小不少于半年前.");
+        reload();
+    }
+    else{
+        $.post("${appServer}/pub/entrust/query.json",
+            {
+                startDate: dateArr[0],
+                capitalAccountId: getUrlParam("capitalAccountId"),
+                endDate: dateArr[1],
+                pageIndex: pageIndex
+            },
+            function(data){
+                $("#pageCount").text(data.pageCount).hide();
+                $("#pageIndex").text(pageIndex).hide();
+                if(data.resSize != 0){
+                    var j = 0;
+                    var pageSize;
+                    if(data.pageCount == pageIndex + 1){
+                        pageSize = data.resSize % data.pageSize;
+                    }
+                    else{
+                        pageSize = data.pageSize;
+                    }
+                    // alert(pageCount.text());
+                    // alert(pageSize);
+                    for(var i = 0; i < pageSize; i++){
+                        if(i==0){
+                            if($("#stockCode").val().length!=0){
+                                if($("#stockCode").val() == data.tableContent[i].reportCode){
+                                    $("#queryTableContent").html("<tr><td>"+data.tableContent[i].entrustSerialNo+"</td><td>"+data.tableContent[i].reportCode+"</td><td>"+data.tableContent[i].stockName+"</td><td>"+data.tableContent[i].entrustDirection+"</td><td>"+data.tableContent[i].entrustStatus+"</td><td>"+data.tableContent[i].entrustPrice+"</td><td>"+data.tableContent[i].entrustAmount+"</td><td>"+data.tableContent[i].entrustBalance+"</td><td>"+data.tableContent[i].businAmount+"</td><td>"+data.tableContent[i].dealPercentage+"</td><td>"+data.tableContent[i].cancelAmount+"</td><td>"+data.tableContent[i].businessDate+"</td><td>"+data.tableContent[i].entrustTime+"</td><td>"+data.tableContent[i].marketNo+"</td></tr>");
+                                    j++;
+                                }else{
+                                    $("#queryTableContent").html('<tr><td colspan="25" align="center">无数据</td></tr>');
+                                }
+                            }
+                            else{
+                                $("#queryTableContent").html("<tr><td>"+data.tableContent[i].entrustSerialNo+"</td><td>"+data.tableContent[i].reportCode+"</td><td>"+data.tableContent[i].stockName+"</td><td>"+data.tableContent[i].entrustDirection+"</td><td>"+data.tableContent[i].entrustStatus+"</td><td>"+data.tableContent[i].entrustPrice+"</td><td>"+data.tableContent[i].entrustAmount+"</td><td>"+data.tableContent[i].entrustBalance+"</td><td>"+data.tableContent[i].businAmount+"</td><td>"+data.tableContent[i].dealPercentage+"</td><td>"+data.tableContent[i].cancelAmount+"</td><td>"+data.tableContent[i].businessDate+"</td><td>"+data.tableContent[i].entrustTime+"</td><td>"+data.tableContent[i].marketNo+"</td></tr>");
+                            }
+                        }
+                        else{
+                            if($("#stockCode").val().length!=0){
+                                if($("#stockCode").val() == data.tableContent[i].reportCode){
+                                    if(j!=0){
+                                        $("#queryTableContent").append("<tr><td>"+data.tableContent[i].entrustSerialNo+"</td><td>"+data.tableContent[i].reportCode+"</td><td>"+data.tableContent[i].stockName+"</td><td>"+data.tableContent[i].entrustDirection+"</td><td>"+data.tableContent[i].entrustStatus+"</td><td>"+data.tableContent[i].entrustPrice+"</td><td>"+data.tableContent[i].entrustAmount+"</td><td>"+data.tableContent[i].entrustBalance+"</td><td>"+data.tableContent[i].businAmount+"</td><td>"+data.tableContent[i].dealPercentage+"</td><td>"+data.tableContent[i].cancelAmount+"</td><td>"+data.tableContent[i].businessDate+"</td><td>"+data.tableContent[i].entrustTime+"</td><td>"+data.tableContent[i].marketNo+"</td></tr>");
+                                    }
+                                    else{
+                                        $("#queryTableContent").html("<tr><td>"+data.tableContent[i].entrustSerialNo+"</td><td>"+data.tableContent[i].reportCode+"</td><td>"+data.tableContent[i].stockName+"</td><td>"+data.tableContent[i].entrustDirection+"</td><td>"+data.tableContent[i].entrustStatus+"</td><td>"+data.tableContent[i].entrustPrice+"</td><td>"+data.tableContent[i].entrustAmount+"</td><td>"+data.tableContent[i].entrustBalance+"</td><td>"+data.tableContent[i].businAmount+"</td><td>"+data.tableContent[i].dealPercentage+"</td><td>"+data.tableContent[i].cancelAmount+"</td><td>"+data.tableContent[i].businessDate+"</td><td>"+data.tableContent[i].entrustTime+"</td><td>"+data.tableContent[i].marketNo+"</td></tr>");
+                                        j++;
+                                    }
+                                }
+                            }
+                            else{
+                                $("#queryTableContent").append("<tr><td>"+data.tableContent[i].entrustSerialNo+"</td><td>"+data.tableContent[i].reportCode+"</td><td>"+data.tableContent[i].stockName+"</td><td>"+data.tableContent[i].entrustDirection+"</td><td>"+data.tableContent[i].entrustStatus+"</td><td>"+data.tableContent[i].entrustPrice+"</td><td>"+data.tableContent[i].entrustAmount+"</td><td>"+data.tableContent[i].entrustBalance+"</td><td>"+data.tableContent[i].businAmount+"</td><td>"+data.tableContent[i].dealPercentage+"</td><td>"+data.tableContent[i].cancelAmount+"</td><td>"+data.tableContent[i].businessDate+"</td><td>"+data.tableContent[i].entrustTime+"</td><td>"+data.tableContent[i].marketNo+"</td></tr>");
+                            }
+                        }
+                    }
+                }
+                else{
+                    $("#queryTableContent").html('<tr><td colspan="25" align="center">无数据</td></tr>');
+                }
+                $(".pager").each(function () {
+                    if(!isNaN(($(this).text()))) {
+                        $(this).text(pageIndex + 1);
+                        // $(this).text(2);
+                    }
+                });
+                $("#stockCode").AutoComplete({
+                    'data': data.reportCodes,
+                    'width': 'auto',
+                    'maxItems': 5,
+                    'listStyle': 'custom',
+                    'createItemHandler': function(index, data){
+                        return "<span style='color:black;'>"+data.label+"</span>";
+                    },
+                }).AutoComplete('show');
+            }
+        );
+    }
+}
+
+$(document).ready(function(){
+
+    $("#reload").click(function(){
+        reload();
+    });
+
+    $("#query").click(function(){
+        query(0);
+    });
+
+    $("#firstPage").click(function () {
+        query(0);
+    });
+
+    $("#prevPage").click(function () {
+        var prevPage = parseInt($("#pageIndex").text()) - 1;
+        if(prevPage >= 0)
+            query(prevPage);
+    });
+
+    $("#nextPage").click(function () {
+        var nextPage = parseInt($("#pageIndex").text()) + 1;
+        if(nextPage < $("#pageCount").text()){
+            query(nextPage);
+        }
+    });
+
+    $("#lastPage").click(function () {
+        query($("#pageCount").text() - 1);
+    });
+
+    $(".pager").click(function () {
+        if(!isNaN(($(this).text()))) {
+            query($(this).text() - 1);
+        }
+    });
+});

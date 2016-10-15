@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>O++交易系统|委托查询</title>
+
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="../css/bootstrap.css">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="../js/jquery.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="../js/bootstrap.js"></script>
+
+    <link rel="stylesheet" href="../css/common.css">
+
+</head>
+<body>
+<div class="container-fluid">
+    <!--导航条开始-->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">O++</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="fund.html">资金账号维护 <span class="sr-only">(current)</span></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">风控设置<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="pools-config.html">黑白池设置</a></li>
+                            <li><a href="#">风控设置</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">指令管理<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="single-dir.html">单产品指令</a></li>
+                            <li><a href="#">指令管理</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="entrust-query.html">委托查询<span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">日终<span class="sr-only">(current)</span></a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">个人中心<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">信息管理</a></li>
+                            <li><a href="#">注销</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+    <!--导航条结束-->
+
+    <!--内容区开始-->
+
+    <div style="color: #1b6d85; width: 90%; margin: auto ">
+         查询日期从 <input type="date"> 到 <input type="date"> <input type="text">
+        <button class="btn btn-primary btn-lg" style='font-size:5px; border: none; background-color: rgb(47,47,47);'>查询</button>
+        <button class="btn btn-primary btn-lg" style='font-size:5px; border: none; background-color: rgb(47,47,47);'>刷新</button>
+    </div>
+
+    <div class="table-responsive" style="width: 90%; margin: auto;">
+        <table class="table" style="white-space: nowrap">
+            <caption>查询结果</caption>
+            <thead>
+            <tr>
+                <th>委托序号</th>
+                <th>交易员编号</th>
+                <th>交易员姓名</th>
+                <th>证券代码</th>
+                <th>证券名称</th>
+                <th>委托方向</th>
+                <th>委托状态</th>
+                <th>委托价格</th>
+                <th>委托数量</th>
+                <th>委托金额</th>
+                <th>成交数量</th>
+                <th>成交百分比</th>
+                <th>撤单数量</th>
+                <th>委托下达日期</th>
+                <th>委托时间</th>
+                <th>交易市场</th>
+                <th>委托发起方式</th>
+                <th>币种</th>
+                <th>备注</th>
+                <th>约定号</th>
+                <th>对方席位</th>
+                <th>对方股东</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+            </tr>
+            <tr>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+            </tr>
+            <tr>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+                <td>23/11/2013</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <br>
+    <br>
+
+    <div style="width: 500px; margin: auto;">
+        <div class="row">
+            <div class="col-md-4" style="box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444; width: auto">总记录数：0</div>
+            <div class="col-md-8" style="box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444; width: auto">委托总数量：0</div>
+            <div class="col-md-8" style="box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444; width: auto">委托总金额：0.00</div>
+            <div class="col-md-8" style="box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444; width: auto">成交总数量：0</div>
+        </div>
+    </div>
+
+    <div style="margin: auto; width: 500px">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox">未成&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <label>
+                            <input type="checkbox">已成&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <label>
+                            <input type="checkbox">已撤&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <label>
+                            <input type="checkbox">废单&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <ul class="pagination" style="left: 40%; position: absolute">
+        <li><a href="#">&laquo;</a></li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#">&raquo;</a></li>
+    </ul>
+</div>
+
+<div class="footer">
+    <p>&copy;恒生电子股份有限公司</p>
+</div>
+</body>
+</html>

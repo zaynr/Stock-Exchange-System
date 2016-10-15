@@ -1,0 +1,111 @@
+
+<body>
+<div class="container-fluid">
+
+<script src="${appServer}/js/jquery.autocomplete.js"></script>
+<link rel="stylesheet" href="${appServer}/css/jquery.autocomplete.css">
+<script>
+#parse("/screen/pub/entrust/script.vm")
+</script>
+    <!--内容区开始-->
+
+    <div style="color: #1b6d85; width: 90%; margin: auto ">
+         查询日期从 <input type="date" name='startDate'> 到 <input type="date" name='endDate'> 证券代码:<input type="text" id = "stockCode">
+        <button id='query' class="btn btn-primary btn-lg" style='font-size:10px; border: none; background-color: rgb(47,47,47);'>查询</button>
+        <button id='reload' class="btn btn-primary btn-lg" style='font-size:10px; border: none; background-color: rgb(47,47,47);'>刷新</button>
+    </div>
+
+    <div class="table-responsive" style="width: 90%; margin: auto;">
+        <table class="table table-bordered" style="white-space: nowrap">
+            <caption>查询结果</caption>
+            <thead>
+            <tr>
+                <th>委托序号</th>
+                <th>证券代码</th>
+                <th>证券名称</th>
+                <th>委托方向</th>
+                <th>委托状态</th>
+                <th>委托价格</th>
+                <th>委托数量</th>
+                <th>委托金额</th>
+                <th>成交数量</th>
+                <th>成交百分比</th>
+                <th>撤单数量</th>
+                <th>委托下达日期</th>
+                <th>委托时间</th>
+                <th>交易市场</th>
+            </tr>
+            </thead>
+            <tbody id = 'queryTableContent'>
+            <tr><td colspan="25" align="center">无数据</td></tr>
+            <!--<tr>
+                <td>$item.entrustSerialNo</td>
+                <td>$item.operatorNo</td>
+                <td>$item.operatorName</td>
+                <td>$item.reportCode</td>
+                <td>$item.stockName</td>
+                <td>$item.entrustDirection</td>
+                <td>$item.entrustStatus</td>
+                <td>$item.entrustPrice</td>
+                <td>$item.entrustAmount</td>
+                <td>$item.entrustBalance</td>
+                <td>$item.businAmount</td>
+                <td>$item.dealPercentage</td>
+                <td>$item.cancelAmount</td>
+                <td>$item.businessDate</td>
+                <td>$item.entrustTime</td>
+                <td>$item.marketNo</td>
+                <td>$item.entrustLaunchType</td>
+                <td>$item.tradeSeat</td>
+                <td>$item.stockholderId</td>
+            </tr>-->
+            
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <br>
+<!--
+    <div style="width: 600px; margin: auto;">
+        <div class="row">
+            <div class="col-md-4" style="box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444; width: auto">总记录数：$rowCount</div>
+            <div class="col-md-8" style="box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444; width: auto">委托总数量：0</div>
+            <div class="col-md-8" style="box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444; width: auto">委托总金额：0.00</div>
+            <div class="col-md-8" style="box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444; width: auto">成交总数量：0</div>
+        </div>
+    </div>
+
+    <div style="margin: auto; width: 500px">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id='undone'>未成&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <label>
+                            <input type="checkbox" id='done'>已成&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <label>
+                            <input type="checkbox" id='cancelled'>已撤&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <label>
+                            <input type="checkbox" id='abandoned'>废单&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+-->
+    <ul class="pagination" style="top: 88%; left: 40%; position: absolute">
+        <li><a class='pager' id='firstPage'>首页</a></li>
+        <li><a class='pager' id='prevPage'>&laquo;</a></li>
+        <li><a class='pager'>1</a></li>
+        <li><a class='pager' id='nextPage'>&raquo;</a></li>
+        <li><a class='pager' id='lastPage'>末页</a></li>
+    </ul>
+</div>
+<div id='pageIndex'></div>
+<div id='jyIndex'></div>
+<div id='pageCount'></div>
+
+</body>
+</html>

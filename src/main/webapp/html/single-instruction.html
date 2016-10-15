@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>O++交易系统|单指令管理</title>
+
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="../css/bootstrap.css">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="../js/jquery.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="../js/bootstrap.js"></script>
+
+    <link rel="stylesheet" href="../css/common.css">
+
+</head>
+<body>
+<div class="container-fluid">
+    <!--导航条开始-->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">O++</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="fund.html">资金账号维护 <span class="sr-only">(current)</span></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">风控设置<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="pools-config.html">黑白池设置</a></li>
+                            <li><a href="#">风控设置</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">指令管理<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="single-dir.html">单产品指令</a></li>
+                            <li><a href="#">指令管理</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="entrust-query.html">委托查询<span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">日终<span class="sr-only">(current)</span></a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">个人中心<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">信息管理</a></li>
+                            <li><a href="#">注销</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+    <!--导航条结束-->
+
+    <!--内容区开始-->
+
+    <div id="account-info-brief">
+        <table class="table" style="width: 60%; margin: auto">
+            <thead>
+                <tr>
+                    <th>可用金额</th>
+                    <th>期初现金金额</th>
+                    <th>当前现金金额</th>
+                    <th>股票资产</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1000万</td>
+                    <td>1000万</td>
+                    <td>1000万</td>
+                    <td>1000万</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="account-info-cont">
+        <table class="table table-bordered" style="width: 80%; margin: auto">
+            <thead>
+                <tr>
+                    <th>证券代码</th>
+                    <th>证券名称</th>
+                    <th>持仓数量</th>
+                    <th>可卖数量</th>
+                    <th>最新价</th>
+                    <th>涨跌幅</th>
+                    <th>交易状态</th>
+                    <th>持仓市值</th>
+                    <th>交易市场</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>8</td>
+                    <td>9</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>8</td>
+                    <td>9</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="directions-line1" style="margin-top:10%; float: left; width: 50%">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="stock-code" class="col-sm-2 control-label">证券代码</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="stock-code"  style="width: 80%"
+                           placeholder="输入证券代码">
+                    <p class="form-control-static" id="stock-name">根据输入代码生成股票名</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="entrust-dir" class="col-sm-2 control-label">委托方向</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="entrust-dir" style="width: 80%">
+                        <option value="">卖出</option>
+                        <option value="">买入</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="price" class="col-sm-2 control-label">价格</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="price" style="width: 80%"
+                           placeholder="单位: 元" style="width: 15%">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="target-type" class="col-sm-2 control-label">目标类型</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="target-type" style="width: 80%">
+                        <option value="">绝对数量</option>
+                        <option value="">绝对金额</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="directions-line2" style="margin-top:10%; float: left; width: 50%">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="avaliable-num" class="col-sm-2 control-label">可用数量</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static" id="avaliable-num">根据提供的可用数量生成</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="ins-num" class="col-sm-2 control-label">指令数量</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="ins-num"  style="width: 80%"
+                           placeholder=" ">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="ins-figure" class="col-sm-2 control-label">指令金额</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="ins-figure"  style="width: 80%"
+                           placeholder=" ">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="target-type" class="col-sm-2 control-label">目标类型</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="operator-select" style="width: 80%">
+                        <option value="">操作员001</option>
+                        <option value="">操作员002</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default">确定</button>
+                    <button type="submit" class="btn btn-default">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!--<div class="footer" style="margin: auto; bottom: 0; position: absolute;">
+        <p>&copy;恒生电子股份有限公司</p>
+    </div>-->
+
+</div>
+
+</body>
+</html>

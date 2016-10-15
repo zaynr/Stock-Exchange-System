@@ -1,0 +1,31 @@
+function query(){
+    $.ajax({
+        type: "POST",
+        url:"${appServer}/offer/entrusts.json",
+        success: function(data){
+            if(data.pageSize!=0){
+                for(var i = 0; i < data.pageSize; i++){
+                    if(i==0){
+                        $("#queryTableContent").html("<tr><td>"+data.tableContent[i].entrustNo+"</td><td>"+data.tableContent[i].stockCode+"</td><td>"+data.tableContent[i].stockName+"</td><td>"+data.tableContent[i].bsName+"</td><td>"+data.tableContent[i].statusName+"</td><td>"+data.tableContent[i].entrustPrice+"</td><td>"+data.tableContent[i].entrustAmount+"</td><td>"+data.tableContent[i].businessAmount+"</td><td>"+data.tableContent[i].businessPrice+"</td><td>"+data.tableContent[i].reportTime + "</td></tr>");
+                    }
+                    else{
+                        $("#queryTableContent").append("<tr><td>"+data.tableContent[i].entrustNo+"</td><td>"+data.tableContent[i].stockCode+"</td><td>"+data.tableContent[i].stockName+"</td><td>"+data.tableContent[i].bsName+"</td><td>"+data.tableContent[i].statusName+"</td><td>"+data.tableContent[i].entrustPrice+"</td><td>"+data.tableContent[i].entrustAmount+"</td><td>"+data.tableContent[i].businessAmount+"</td><td>"+data.tableContent[i].businessPrice+"</td><td>"+data.tableContent[i].reportTime + "</td></tr>");
+                    }
+                }
+            }
+            else{
+                $("#queryTableContent").html('<tr><td colspan="25" align="center">无数据</td></tr>');
+            }
+        },
+        dataType: "json"
+    });
+}
+function myrefresh()
+{
+    window.location.reload();
+}
+
+$(document).ready(function(){
+    query();
+    setInterval('query()', 4000);
+});

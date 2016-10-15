@@ -1,0 +1,434 @@
+var at;
+var lf;
+
+function dic_date(date){
+    return (date/10000).toFixed(0) + "/" 
+        + ((date/100)%100).toFixed(0) + "/" 
+        + (date%100).toFixed(0);
+}
+
+function dic_time(time){
+    return (time/10000).toFixed(0) + ":" 
+        + ((time/100)%100).toFixed(0) + ":" 
+        + (time%100).toFixed(0);
+}
+
+function dic_insStatus(insStatus){
+    if(insStatus == "2")
+        return "已下达";
+    if(insStatus == "3")
+        return "正在执行";
+    if(insStatus == "6")
+        return "已撤销";
+    if(insStatus == "7")
+        return "已完成";
+}
+
+function dic_marketNo(marketNo){
+    if(marketNo == "1")
+        return "上交所";
+    if(marketNo == "2")
+        return "深交所";
+}
+
+function dic_entrustDirection(entrustDirection){
+    if(entrustDirection == "1")
+        return "买入";
+    if(entrustDirection == "2")
+        return "卖出";
+}
+
+function dic_operator(dic, operator){
+    for(var i = 0; i < dic.length; i++)
+        if(dic[i].capitalAccountId == operator)
+            return dic[i].capitalAccountNo+" "+dic[i].capitalAccountName;
+}
+
+function dic_entrustStatus(entrustStatus){
+    if(entrustStatus == "0")
+        return "待报";
+    if(entrustStatus == "1")
+        return "已报";
+    if(entrustStatus == "2")
+        return "部成";
+    if(entrustStatus == "3")
+        return "已成";
+    if(entrustStatus == "4")
+        return "废单";
+    if(entrustStatus == "5")
+        return "撤销失败";
+}
+
+function dic_insOpType(insOpType){
+    if(insOpType == "1")
+        return "指令下达";
+    if(insOpType == "3")
+        return "指令撤销";
+}
+
+function detail(ins){
+    $.post("${appServer}/zl/admin/detail.json",
+        {
+            insId: ins
+        },
+        function(data){
+            var ia = data.detail.insAmount;
+            var ea = data.detail.entrustAmount;
+            var da = data.detail.dealAmount;
+            var db = data.detail.dealBalance;
+            var dba = 0;
+            if(da>0.001)
+                dba = db/da;
+            $("#insId").html(data.detail.insId);
+            $("#insStatus").html(dic_insStatus(data.detail.insStatus));
+            $("#marketNo").html(dic_marketNo(data.detail.marketNo));
+            $("#reportCode").html(data.detail.reportCode);
+            $("#stockName").html(data.detail.stockName);
+            $("#entrustDirection").html(dic_entrustDirection(data.detail.entrustDirection));
+            $("#insAmount").html(ia);
+            $("#insPrice").html(data.detail.insPrice.toFixed(2));
+            $("#insBalance").html(data.detail.insBalance.toFixed(2));
+            $("#entrustPercent").html(((ea/ia)*100).toFixed(2)+"%");
+            $("#dealPercent").html(((da/ia)*100).toFixed(2)+"%");
+            $("#dealAvg").html(dba.toFixed(2));
+            $("#entrustAmount").html(ea.toFixed(2));
+            $("#entrustBalance").html(data.detail.entrustBalance);
+            $("#dealAmount").html(da.toFixed(2));
+            $("#dealBalance").html(db);
+            $("#directOperator").html(dic_operator(data.accounts, data.detail.directOperator));
+            $("#tradeOperator").html(dic_operator(data.accounts, data.detail.tradeOperator));
+        }
+    );
+}
+
+function stock(ins){
+    $.post("${appServer}/zl/admin/stock.json",
+        {
+            insId: ins
+        },
+        function(data){
+                var ia = data.stock.insAmount;
+                var ea = data.stock.entrustAmount;
+                var eb = data.stock.entrustBalance;
+                var da = data.stock.dealAmount;
+                var db = data.stock.dealBalance;
+                var eba = 0;
+                var dba = 0;
+                if(da>0.001)
+                    dba = db/da;
+                if(ea>0.001)
+                    eba = eb/ea;
+                var stockRow = 
+                    "<tr>"+
+                        "<td>"+data.stock.insId+"</td>"+
+                        "<td>"+dic_marketNo(data.stock.marketNo)+"</td>"+
+                        "<td>"+data.stock.reportCode+"</td>"+
+                        "<td>"+data.stock.stockName+"</td>"+
+                        "<td>"+data.stock.insPrice.toFixed(2)+"</td>"+
+                        "<td>"+ia+"</td>"+
+                        "<td>"+data.stock.insBalance.toFixed(2)+"</td>"+
+                        "<td>"+ea+"</td>"+
+                        "<td>"+eb.toFixed(2)+"</td>"+
+                        "<td>"+((ea/ia)*100).toFixed(2)+"%</td>"+
+                        "<td>"+eba.toFixed(2)+"</td>"+
+                        "<td>"+da+"</td>"+
+                        "<td>"+db.toFixed(2)+"</td>"+
+                        "<td>"+((da/ia)*100).toFixed(2)+"%</td>"+
+                        "<td>"+dba.toFixed(2)+"</td>"+
+                    "</tr>";
+                $("#stockTable").html(stockRow);
+        }
+    );
+}
+
+function entrust(ins){
+    $.post("${appServer}/zl/admin/entrust.json",
+        {
+            insId: ins
+        },
+        function(data){
+            for(var i = 0; i < data.entrust.length; i++){
+                var ea = data.entrust[i].entrustAmount;
+                var ep = data.entrust[i].entrustPrice;
+                var da = data.entrust[i].businAmount;
+                var db = data.entrust[i].businBalance;
+                var eb = (ea*ep).toFixed(2);
+                var dba = 0;
+                if(da>0.001)
+                    dba = db/da;
+                var entrustRow = 
+                    "<tr>"+
+                        "<td>"+data.entrust[i].insId+"</td>"+
+                        "<td>"+data.entrust[i].entrustSerialNo+"</td>"+
+                        "<td>"+dic_entrustStatus(data.entrust[i].entrustStatus)+"</td>"+
+                        "<td>"+data.entrust[i].reportCode+"</td>"+
+                        "<td>"+data.entrust[i].stockName+"</td>"+
+                        "<td>"+dic_entrustDirection(data.entrust[i].entrustDirection)+"</td>"+
+                        "<td>"+ep.toFixed(2)+"</td>"+
+                        "<td>"+ea+"</td>"+
+                        "<td>"+eb.toFixed(2)+"</td>"+
+                        "<td>"+da+"</td>"+
+                        "<td>"+db.toFixed(2)+"</td>"+
+                        "<td>"+((da/ea)*100).toFixed(2)+"%</td>"+
+                        "<td>"+dba.toFixed(2)+"</td>"+
+                        "<td>"+dic_time(data.entrust[i].entrustTime)+"</td>"+
+                    "</tr>";
+                if(i==0){
+                    $("#entrustTable").html(entrustRow);
+                }
+                else{
+                    $("#entrustTable").append(entrustRow);
+                }
+            }
+        }
+    );
+}
+
+function deal(ins){
+    $.post("${appServer}/zl/admin/deal.json",
+        {
+            insId: ins
+        },
+        function(data){
+            for(var i = 0; i < data.deal.length; i++){
+                var da = data.deal[i].dealAmount;
+                var db = data.deal[i].dealBalance;
+                var dba = 0;
+                if(da>0.001)
+                    dba = db/da;
+                var dealRow = 
+                    "<tr>"+
+                        "<td>"+data.deal[i].realdealSerialNo+"</td>"+
+                        "<td>"+data.deal[i].reportCode+"</td>"+
+                        "<td>"+data.deal[i].stockName+"</td>"+
+                        "<td>"+dic_entrustDirection(data.deal[i].entrustDirection)+"</td>"+
+                        "<td>"+da+"</td>"+
+                        "<td>"+db.toFixed(2)+"</td>"+
+                        "<td>"+dba.toFixed(2)+"</td>"+
+                        "<td>"+data.deal[i].dealTime+"</td>"+
+                        "<td>"+dic_time(data.deal[i].entrustSerialNo)+"</td>"+
+                    "</tr>";
+                if(i==0){
+                    $("#dealTable").html(dealRow);
+                }
+                else{
+                    $("#dealTable").append(dealRow);
+                }
+            }
+        }
+    );
+}
+
+function risk(ins){
+    $.post("${appServer}/zl/admin/risk.json",
+        {
+            insId: ins
+        },
+        function(data){
+            for(var i = 0; i < data.risk.length; i++){
+                var riskRow = 
+                    "<tr>"+
+                        "<td>"+data.risk[i].insId+"</td>"+
+                        "<td>"+data.risk[i].warnOperation+"</td>"+
+                        "<td>"+data.risk[i].reportCode+"</td>"+
+                        "<td>"+data.risk[i].stockName+"</td>"+
+                        "<td>"+data.risk[i].ruleTypeName+"</td>"+
+                        "<td>"+data.risk[i].ruleSummary+"</td>"+
+                        "<td>"+data.risk[i].calcValue.toFixed(2)+"</td>"+
+                        "<td>"+data.risk[i].compareDirection+"</td>"+
+                        "<td>"+data.risk[i].setValue.toFixed(2)+"</td>"+
+                    "</tr>";
+                if(i==0){
+                    $("#riskTable").html(riskRow);
+                }
+                else{
+                    $("#riskTable").append(riskRow);
+                }
+            }
+        }
+    );
+}
+
+function op(ins){
+    $.post("${appServer}/zl/admin/op.json",
+        {
+            insId: ins
+        },
+        function(data){
+            for(var i = 0; i < data.op.length; i++){
+                var opRow = 
+                    "<tr>"+
+                        "<td>"+data.op[i].serialNo+"</td>"+
+                        "<td>"+dic_date(data.op[i].businessDate)+"</td>"+
+                        "<td>"+dic_insOpType(data.op[i].insOpType)+"</td>"+
+                        "<td>"+dic_operator(data.accounts, data.op[i].operatorNo)+"</td>"+
+                        "<td>"+dic_insStatus(data.op[i].insStatus)+"</td>"+
+                        "<td>"+dic_time(data.op[i].operateTime)+"</td>"+
+                        "<td>"+dic_operator(data.accounts, data.op[i].tradeOperator)+"</td>"+
+                        "<td>"+data.op[i].remark+"</td>"+
+                    "</tr>";
+                if(i==0){
+                    $("#opTable").html(opRow);
+                }
+                else{
+                    $("#opTable").append(opRow);
+                }
+            }
+        }
+    );
+}
+
+function tabswitch(id){
+    if(at == "detailTab")
+        detail(id);
+    else
+    if(at == "stockTab")
+        stock(id);
+    else
+    if(at == "entrustTab")
+        entrust(id);
+    else
+    if(at == "dealTab")
+        deal(id);
+    else
+    if(at == "riskTab")
+        risk(id);
+    else
+    if(at == "opTab")
+        op(id);
+}
+
+function query(status){
+    $.post("${appServer}/zl/admin/query.json",
+        {
+            account: getUrlParam("capitalAccountId")
+        },
+        function(data){
+            $("#listTable").html('<tr><td colspan="25" align="center">无数据</td></tr>');
+
+            var empty = 1;
+            for(var i = 0; i < data.list.length; i++){
+                if(status == -1 || data.list[i].insStatus == status){
+                    var ia = data.list[i].insAmount;
+                    var ea = data.list[i].entrustAmount;
+                    var da = data.list[i].dealAmount;
+                    var db = data.list[i].dealBalance;
+                    var dba = 0;
+                    if(da>0.001)
+                        dba = db/da;
+                    var listRow = 
+                        "<tr>"+
+                            "<td>"+data.list[i].insId+"</td>"+
+                            "<td>"+dic_insStatus(data.list[i].insStatus)+"</td>"+
+                            "<td>"+dic_marketNo(data.list[i].marketNo)+"</td>"+
+                            "<td>"+data.list[i].reportCode+"</td>"+
+                            "<td>"+data.list[i].stockName+"</td>"+
+                            "<td>"+dic_entrustDirection(data.list[i].entrustDirection)+"</td>"+
+                            "<td>"+data.list[i].insPrice.toFixed(2)+"</td>"+
+                            "<td>"+ia+"</td>"+
+                            "<td>"+data.list[i].insBalance.toFixed(2)+"</td>"+
+                            "<td>"+ea+"</td>"+
+                            "<td>"+data.list[i].entrustBalance.toFixed(2)+"</td>"+
+                            "<td>"+da+"</td>"+
+                            "<td>"+db.toFixed(2)+"</td>"+
+                            "<td>"+((ea/ia)*100).toFixed(2)+"%</td>"+
+                            "<td>"+((da/ia)*100).toFixed(2)+"%</td>"+
+                            "<td>"+dba.toFixed(2)+"</td>"+
+                            "<td>"+dic_date(data.list[i].businessDate)+"</td>"+
+                            "<td>"+dic_operator(data.accounts, data.list[i].tradeOperator)+"</td>"+
+                            "<td>"+data.list[i].remark+"</td>"+
+                        "</tr>";
+                    if(empty){
+                        $("#listTable").html(listRow);
+                        empty = 0;
+                    }
+                    else{
+                        $("#listTable").append(listRow);
+                    }
+                }
+            }
+            
+            at = $("#detailTab").attr("id");
+            
+            $("#listTable tr").click(function(){
+                var trs = $(this).parent().children('tr');
+                trs.each(function(){
+                    $(this).css('background-color', 'rgb(37,37,37)');
+                });
+                $(this).css('background-color', 'grey');
+                
+                var ins = $(this).children('td').eq(0).text();
+                $("#choose_id").val(ins);
+                
+                tabswitch(ins);
+            });
+            
+        }
+    );
+}
+
+function cancel(ins){
+    $.post("${appServer}/zl/admin/cancel.json",
+        {
+            insId: ins,
+            account: getUrlParam("capitalAccountId")
+        },
+        function(data){
+            if(data.error){
+                $('#mbBody').html(data.error);
+                $('#mb').modal('show');
+                $('#mbButton').click(function(){
+                    $('#mb').modal('hide');
+                });
+            }else{
+                $('#mbLabel').html("消息");
+                $('#mbBody').html("撤销成功");
+                $('#mb').modal('show');
+                $('#mbButton').click(function(){
+                    $('#mb').modal('hide');
+                });
+                
+                query(lf);
+            }
+        }
+    );
+}
+
+$(function(){
+    lf = $("#lf input:radio:checked").val();
+    query(lf);
+    
+    $("#lf input:radio").click(function(){
+        lf = $("#lf input:radio:checked").val();
+        query(lf);
+    });
+    
+    $("#detailTab, #stockTab, #entrustTab, #dealTab, #riskTab, #opTab")
+        .on('shown.bs.tab', function (e) {
+            at = $(e.target).attr("id");
+            var ins = $("#choose_id").val();
+            if(ins != "")
+                tabswitch(ins);
+    });
+    
+    $("#cancel").click(function(){
+        var ins = $("#choose_id").val();
+        if(ins != "") {
+            $('#confirmBody').html("是否撤销指令?");
+            $('#confirm').modal('show');
+            $('#confirmButton').click(function(){
+                $('#confirm').modal('hide');
+                cancel(ins);
+            });
+        }
+        else {
+            $('#mbBody').html("请选择指令");
+            $('#mb').modal('show');
+            $('#mbButton').click(function(){
+                $('#mb').modal('hide');
+            });
+        }
+    });
+    
+   
+});

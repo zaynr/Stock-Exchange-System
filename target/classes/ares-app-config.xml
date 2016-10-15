@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 样例 -->
+<ares>
+	<pub nodeName="opp-web-client" nodeNo="0" />
+
+	<plugins>
+		<plugin service-id="jres.logFactory" load-level="1"></plugin>
+		<plugin service-id="jres.configurationHelper" load-level="1"></plugin>
+<!-- 
+ 	   <plugin service-id="jres.filter" load-level="3">
+			<plugin-configuration>
+				<args debug="false" />
+				<handlers>
+					<instance name="handler1" class="zt.op.common.filter.T2ServicesFilter">
+						<filter eventType="0;1" />
+					</instance>
+				</handlers>
+				<pipeline name="jres.pipeline1">
+					handler1
+				</pipeline>
+			</plugin-configuration>
+		</plugin> 
+ -->
+		<!-- CEP核心插件 -->
+		<plugin service-id="jres.cepcore" load-level="3">
+			<plugin-configuration>
+				<args threadCount="3" queueSize="30" debug="false">
+					<monitor port="8012" key="123456" enable="true" />
+				</args>
+				<bizservices>
+					<bizservice id="jres.mproxy" debug="true" />
+				</bizservices>
+				<routetables>
+					<routetable serviceId="com.hundsun.jres.manage" functionId="8" pluginId="jres.mproxy" />
+					<routetable functionId="1*;620777;620778;8*" nodeName="bus_ar" />
+					<routetable functionId="3*;4*" nodeName="offer_ar" />
+				</routetables>
+				<eventchains>
+					<chain>jres.mproxy;jres.cepcore</chain>
+					<chain>jres.localService;jres.cepcore</chain>
+					<chain>jres.t2channel;jres.cepcore</chain>
+				</eventchains>
+			</plugin-configuration>
+		</plugin>
+
+		<plugin service-id="jres.localService" load-level="3">
+			<plugin-configuration>
+				<args debug="false" />
+				<time timeout="60000" />
+			</plugin-configuration>
+		</plugin>
+        
+		<plugin service-id="jres.t2channel" load-level="3">
+			<plugin-configuration>
+				<server address="" port="8150" enable="false" />
+				<client enable="true">
+					<parents>
+						<parent parentName="bus_ar" poolSize="1">			
+							<limit licenseFile="classpath:/client_license.dat" encrypt="HSBlowfish" />
+							<members>
+								<member no="0" address="192.168.78.95" port="19002" /><!-- 10.156.244.67 5001-->
+		
+							</members>
+						</parent>
+						<parent parentName="offer_ar" poolSize="1">     
+              <limit licenseFile="classpath:/client_license.dat" encrypt="HSBlowfish" />
+              <members>
+                <member no="0" address="172.28.1.20" port="3002" />
+    
+              </members>
+            </parent>
+					</parents>
+				</client>
+			</plugin-configuration>
+		</plugin>
+	</plugins>
+</ares>

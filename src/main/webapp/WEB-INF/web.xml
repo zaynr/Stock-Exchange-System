@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+    version="2.5">
+    <display-name>Oplusplus</display-name>
+    <!-- spring bean 资源路径 -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath*:conf/spring/remoting-main-beans.xml
+            classpath*:conf/spring/jresplus-cep-beans.xml
+            /WEB-INF/conf/spring/*-beans.xml
+        </param-value>
+    </context-param>
+    <!-- jresplus-mvc配置文件位置 -->
+    <context-param>
+        <param-name>JresConfigLocation</param-name>
+        <param-value>/WEB-INF/conf/server.properties</param-value>
+    </context-param>
+    <!-- 由spring载入的log4j配置文件位置 -->
+    <context-param>
+        <param-name>log4jConfigLocation</param-name>
+        <param-value>/WEB-INF/conf/log4j.properties</param-value>
+    </context-param>
+    <!-- 设置为true或不设置，会将webAppRootKey的值写入系统参数中（System.setProperty） -->
+    <context-param>
+        <param-name>log4jExposeWebAppRoot</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <!-- spring默认刷新log4j配置文件的间隔，单位为ms -->
+    <context-param>
+        <param-name>log4jRefreshInterval</param-name>
+        <param-value>10000</param-value>
+    </context-param>
+    <!-- 不配置时为webapp.root，当两个使用logj的web应用放在一个tomcat中时最好配置为不同名 -->
+    <context-param>
+        <param-name>webAppRootKey</param-name>
+        <param-value>webapp.root</param-value>
+    </context-param>
+    <!--此过滤器已经包含字符编码、contain、nosession（nosession支持开关） -->
+    <filter>
+        <filter-name>jresFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <param-name>targetBeanName</param-name>
+            <param-value>jresFilter</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>jresFilter</filter-name>
+        <url-pattern>*.htm</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>jresFilter</filter-name>
+        <url-pattern>*.json</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>jresFilter</filter-name>
+        <url-pattern>*.xml</url-pattern>
+    </filter-mapping>
+  
+    <!-- spring 加载log4j的监听器 -->
+    <listener>
+        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+    </listener>
+    <!-- jresplus-mvc 上下文加载监听器，代替spring的上下文监听器 -->
+    <listener>
+        <listener-class>com.hundsun.jresplus.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <!-- 避免由于使用introspector方式引起的泄漏，使用此监听器可以再关闭web应用时释放 -->
+    <listener>
+        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+    </listener>
+    <!-- jresplus-mvc的主控制器代替spring原生的DispatcherServlet -->
+    <servlet>
+        <servlet-name>jresServlet</servlet-name>
+        <servlet-class>com.hundsun.jresplus.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>jresServlet</servlet-name>
+        <url-pattern>*.htm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>jresServlet</servlet-name>
+        <url-pattern>*.json</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>jresServlet</servlet-name>
+        <url-pattern>*.xml</url-pattern>
+    </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
+    <!-- 报盘后台进程 -->
+    <listener>
+        <listener-class>zt.op.offer.controller.OfferController</listener-class>
+    </listener>
+</web-app>

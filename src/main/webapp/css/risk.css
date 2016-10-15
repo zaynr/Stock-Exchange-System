@@ -1,0 +1,45 @@
+.table-area{
+    width: 85%;
+    margin-left: 15%;
+    float: left;
+}
+.nav-area{
+    position: absolute;
+    left: 0;
+    width: 15%;
+    height: 90%;
+}
+
+.btn-group{
+    padding-bottom: 20px;
+}
+
+.btn-group-vertical{
+    width: 100%;
+}
+.btn-group-vertical > button{
+    width: 80%;
+}
+.btn-group > button{
+    width: 100px;
+    color: white;
+    background-color: rgb(50,50,50);
+}
+.btn-group > button:hover{
+    color: black;
+    background-color: #e3e3e3;
+}
+
+.btn-group > button:focus{
+    color: white;
+    background-color: rgb(50,50,50);
+}
+
+
+.bond-value-area{
+    display: none;
+}
+.pool-area{
+    display: none;
+}
+

@@ -1,0 +1,30 @@
+/**
+ * Created by zayn on 2016/9/19.
+ */
+
+$(document).ready(function() {
+    $("#dayFinal").click(function(){
+        $("#dayFinal").hide();
+        $("#progressbar").attr("style", "width:"+30+"%");
+        $("#progressbar").text("processing...");
+        $.post("${appServer}/pub/final/final.json",
+            {
+
+            },
+            function(data){
+                var total=10000;
+                var breaker=100;
+                var turn= 25;
+                var progress=0;
+                var timer = setInterval(function(){
+                    progress=progress+turn;
+                    $("#progressbar").attr("style", "width:"+progress+"%");
+                    if (progress>=100) {
+                        clearInterval(timer);
+                        $("#progressbar").text("success");
+                    }
+                }, breaker);
+            }
+        );
+    });
+});

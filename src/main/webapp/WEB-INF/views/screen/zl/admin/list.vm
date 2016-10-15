@@ -1,0 +1,294 @@
+
+<body>
+<div class="container-fluid">
+
+<style>
+table th{
+white-space: nowrap;
+}
+table td{
+white-space: nowrap;
+}
+</style>
+
+<script>
+#parse("/screen/zl/admin/s.vm")
+</script>
+    <!--内容区开始-->
+
+    <div class="table-responsive" style="height: 300px; margin: auto; overflow-x: scroll; overflow-y: scroll;">
+        <table class="table table-bordered" style="white-space: nowrap">
+            <caption>指令列表</caption>
+            <thead>
+            <tr>
+            <th>指令序号</th>
+            <th>指令状态</th>
+            <th>交易市场</th>
+            <th>证券代码</th>
+            <th>证券名称</th>
+            <th>委托方向</th>
+            <th>指令价格</th>
+            <th>指令数量</th>
+            <th>指令金额</th>
+            <th>委托数量</th>
+            <th>委托金额</th>
+            <th>成交数量</th>
+            <th>成交金额</th>
+            <th>委托进度</th>
+            <th>成交进度</th>
+            <th>成交均价</th>
+            <th>开始日</th>
+            <th>执行人</th>
+            <th>备注</th>
+            </tr>
+            </thead>
+            <tbody id = 'listTable'>
+                <tr><td colspan="25" align="center">无数据</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <input id="choose_id" name="choose_id" type="hidden" value=""/>
+    <button id="cancel" type="submit" class="btn btn-primary btn-lg">撤销</button>
+    <div id="lf" class="checkbox-inline">
+        <label class="checkbox-inline">
+            <input type="radio" name="listFilter" id="listAll" value="-1" checked>全部
+        </label>
+        <label class="checkbox-inline">
+            <input type="radio" name="listFilter" id="list2" value="2">已下达
+        </label>
+        <label class="checkbox-inline">
+            <input type="radio" name="listFilter" id="list3" value="3">正在执行
+        </label>
+        <label class="checkbox-inline">
+            <input type="radio" name="listFilter" id="list6" value="6">已撤销
+        </label>
+        <label class="checkbox-inline">
+            <input type="radio" name="listFilter" id="list7" value="7">已完成
+        </label>
+    </div>
+    <br>
+    <br>
+    
+    <ul id="tab" class="nav nav-tabs">
+        <li class="active">
+            <a href="#detail" data-toggle="tab" id="detailTab">
+                              指令明细
+            </a>
+        </li>
+        <li>
+            <a href="#stock" data-toggle="tab" id="stockTab">
+                              指令证券
+            </a>
+        </li>
+        <li>
+            <a href="#entrust" data-toggle="tab" id="entrustTab">
+                              指令委托
+            </a>
+        </li>
+        <li>
+            <a href="#deal" data-toggle="tab" id="dealTab">
+                              指令成交
+            </a>
+        </li>
+        <li>
+            <a href="#risk" data-toggle="tab" id="riskTab">
+                              触犯风控
+            </a>
+        </li>
+        <li>
+            <a href="#op" data-toggle="tab" id="opTab">
+                              操作流水
+            </a>
+        </li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade in active" id="detail">
+            <table class="table table-bordered" style="white-space: nowrap">
+                <tbody>
+                    <tr>
+                        <td class="text-right"><strong>指令序号</strong></td><td id="insId"></td>
+                        <td class="text-right"><strong>指令状态</strong></td><td id="insStatus"></td>
+                        <td class="text-right"><strong>交易市场</strong></td><td id="marketNo"></td>
+                        <td class="text-right"><strong>证券代码</strong></td><td id="reportCode"></td>
+                        <td class="text-right"><strong>证券名称</strong></td><td id="stockName"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>委托方向</strong></td><td id="entrustDirection"></td>
+                        <td class="text-right"><strong>指令数量</strong></td><td id="insAmount"></td>
+                        <td class="text-right"><strong>指令价格</strong></td><td id="insPrice"></td>
+                        <td class="text-right"><strong>指令金额</strong></td><td id="insBalance"></td>
+                        <td class="text-right"><strong>委托进度</strong></td><td id="entrustPercent"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>成交进度</strong></td><td id="dealPercent"></td>
+                        <td class="text-right"><strong>成交均价</strong></td><td id="dealAvg"></td>
+                        <td class="text-right"><strong>委托数量</strong></td><td id="entrustAmount"></td>
+                        <td class="text-right"><strong>委托金额</strong></td><td id="entrustBalance"></td>
+                        <td class="text-right"><strong>成交数量</strong></td><td id="dealAmount"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>成交金额</strong></td><td id="dealBalance"></td>
+                        <td class="text-right"><strong>下达人</strong></td><td id="directOperator"></td>
+                        <td class="text-right"><strong>执行人</strong></td><td id="tradeOperator"></td>
+                        <td class="text-right"><strong></strong></td><td></td>
+                        <td class="text-right"><strong></strong></td><td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="stock">
+        <div class="table-responsive" style="height: 200px; margin: auto; overflow-x: scroll; overflow-y: scroll;">
+            <table class="table table-bordered" style="white-space: nowrap">
+                <thead>
+                <tr>
+                <th>指令序号</th>
+                <th>交易市场</th>
+                <th>证券代码</th>
+                <th>证券名称</th>
+                <th>指令价格</th>
+                <th>指令数量</th>
+                <th>指令金额</th>
+                <th>委托数量</th>
+                <th>委托金额</th>
+                <th>委托进度</th>
+                <th>委托均价</th>
+                <th>成交数量</th>
+                <th>成交金额</th>
+                <th>成交进度</th>
+                <th>成交均价</th>
+                </tr>
+                </thead>
+                <tbody id = 'stockTable'>
+                    <tr><td colspan="25" align="center">无数据</td></tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+        <div class="tab-pane fade" id="entrust">
+        <div class="table-responsive" style="height: 300px; margin: auto; overflow-x: scroll; overflow-y: scroll;">
+            <table class="table table-bordered" style="white-space: nowrap">
+                <thead>
+                <tr>
+                <th>指令序号</th>
+                <th>委托序号</th>
+                <th>委托状态</th>
+                <th>证券代码</th>
+                <th>证券名称</th>
+                <th>委托方向</th>
+                <th>委托价格</th>
+                <th>委托数量</th>
+                <th>委托金额</th>
+                <th>成交数量</th>
+                <th>成交金额</th>
+                <th>成交进度</th>
+                <th>成交均价</th>
+                <th>委托时间</th>
+                </tr>
+                </thead>
+                <tbody id = 'entrustTable'>
+                    <tr><td colspan="25" align="center">无数据</td></tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+        <div class="tab-pane fade" id="deal">
+        <div class="table-responsive" style="height: 300px; margin: auto; overflow-x: scroll; overflow-y: scroll;">
+            <table class="table table-bordered" style="white-space: nowrap">
+                <thead>
+                <tr>
+                <th>成交序号</th>
+                <th>证券代码</th>
+                <th>证券名称</th>
+                <th>委托方向</th>
+                <th>成交数量</th>
+                <th>成交金额</th>
+                <th>成交均价</th>
+                <th>成交时间</th>
+                <th>委托序号</th>
+                </tr>
+                </thead>
+                <tbody id = 'dealTable'>
+                    <tr><td colspan="25" align="center">无数据</td></tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+        <div class="tab-pane fade" id="risk">
+        <div class="table-responsive" style="height: 300px; margin: auto; overflow-x: scroll; overflow-y: scroll;">
+            <table class="table table-bordered" style="white-space: nowrap">
+                <thead>
+                <tr>
+                <th>指令序号</th>
+                <th>触警操作</th>
+                <th>证券代码</th>
+                <th>证券名称</th>
+                <th>风控类型</th>
+                <th>风控说明</th>
+                <th>实际值</th>
+                <th>比较方向</th>
+                <th>设置值</th>
+                </tr>
+                </thead>
+                <tbody id = 'riskTable'>
+                    <tr><td colspan="25" align="center">无数据</td></tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+        <div class="tab-pane fade" id="op">
+        <div class="table-responsive" style="height: 300px; margin: auto; overflow-x: scroll; overflow-y: scroll;">
+            <table class="table table-bordered" style="white-space: nowrap">
+                <thead>
+                <tr>
+                <th>操作流水号</th>
+                <th>业务日期</th>
+                <th>指令操作类型</th>
+                <th>操作员</th>
+                <th>指令状态</th>
+                <th>操作时间</th>
+                <th>执行人</th>
+                <th>备注</th>
+                </tr>
+                </thead>
+                <tbody id = 'opTable'>
+                    <tr><td colspan="25" align="center">无数据</td></tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal fade" id="mb" tabindex="-1" role="dialog" aria-labelledby="mbLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style='color:black;'>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="mbLabel">错误</h4>
+            </div>
+            <div class="modal-body" id="mbBody" style="word-wrap:break-word;word-break:break-all;"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="mbButton">确认</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="confirm" tabindex="-1" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style='color:black;'>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="confirmLabel">警告</h4>
+            </div>
+            <div class="modal-body" id="confirmBody" style="word-wrap:break-word;word-break:break-all;"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="confirmButton">确认</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+</body>
+</html>
